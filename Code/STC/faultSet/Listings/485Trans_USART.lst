@@ -1,0 +1,97 @@
+C51 COMPILER V9.54   485TRANS_USART                                                        12/08/2017 10:46:23 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 485TRANS_USART
+OBJECT MODULE PLACED IN .\Objects\485Trans_USART.obj
+COMPILER INVOKED BY: D:\Keil\Software\C51\BIN\C51.EXE Hardware\485Trans_USART.c OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(..\
+                    -faultSet;.\User;.\Hardware;.\StdPeriph_Driver) DEBUG PRINT(.\Listings\485Trans_USART.lst) TABS(3) OBJECT(.\Objects\485Tr
+                    -ans_USART.obj)
+
+line level    source
+
+   1          #include "485Trans_USART.h"
+   2          
+   3          extern u8 BD_addr,BD_type;  //…Ëπ ∞Âµÿ÷∑º∞¿‡–Õ
+   4          
+   5          const u8 flgCfmHead = 0x7e;                  //÷°Õ∑±Íº«
+   6          const u8 frameCfmTail[2] = {0x0d,0x0a};      //÷°Œ≤À¿≤ª±‰
+   7          u8 frameCfmHead[3] = {0};                    //÷°Õ∑”…’ÌÕ∑±Íº«°¢µÿ÷∑°¢¿‡–Õ◊È≥…
+   8          
+   9          extern u8 xdata UART485_BUF[COM_RX2_Lenth];  //485¥Æø⁄ ˝æ›ª∫¥Ê
+  10          
+  11          u8 COREDATS[COREDATS_SIZE] = {0};      //÷°∫À ˝æ›ª∫¥Ê
+  12          
+  13          void USART485Trans_Init(void){   //485Õ®—∂Ω”ø⁄≥ı ºªØ
+  14   1      
+  15   1         GPIO_InitTypeDef gpio_485;
+  16   1         COMx_InitDefine  UART485Port;
+  17   1         
+  18   1         gpio_485.Mode = GPIO_OUT_PP;
+  19   1         gpio_485.Pin  = GPIO_Pin_2;
+  20   1         GPIO_Inilize(GPIO_P1,&gpio_485);
+  21   1         
+  22   1         UART485Port.UART_Mode = UART_8bit_BRTx;
+  23   1         UART485Port.UART_BRT_Use = BRT_Timer2;
+  24   1         UART485Port.UART_BaudRate = 38400UL;
+  25   1         UART485Port.Morecommunicate = DISABLE;
+  26   1         UART485Port.UART_RxEnable = ENABLE;
+  27   1         UART485Port.BaudRateDouble = DISABLE;
+  28   1         UART485Port.UART_Interrupt = ENABLE;
+  29   1         UART485Port.UART_Polity = PolityHigh;
+  30   1         UART485Port.UART_P_SW = UART2_SW_P10_P11; 
+  31   1         UART485Port.UART_RXD_TXD_Short = DISABLE;
+  32   1         USART_Configuration(USART2,&UART485Port);
+  33   1         
+  34   1         RD485; //≥ı ºªØø™∆ÙΩ” ‹ πƒ‹
+  35   1      }
+  36          
+  37          void frameInsAccept(void){ // ˝æ›—È ’
+  38   1      
+  39   1         u8 loop,corelen;
+  40   1         
+  41   1         frameCfmHead[0] = flgCfmHead;  //÷°Õ∑ÃÓ◊∞
+  42   1         frameCfmHead[1] = BD_addr;
+  43   1         frameCfmHead[2] = BD_type;
+  44   1         
+  45   1         for(loop = 0; loop < COM_RX2_Lenth; loop ++){
+  46   2            
+  47   2            if(UART485_BUF[loop] = flgCfmHead){ //÷°Õ∑±Íº«–£—È/*µ⁄“ª≤„*/
+  48   3         
+  49   3               if(!memcmp(frameCfmHead,&UART485_BUF[loop],3)){ //÷°Õ∑–£—È/*µ⁄∂˛≤„*/
+  50   4               
+  51   4                  corelen  = UART485_BUF[loop + 3];   //÷°Õ∑±Íº«∫Ûµ⁄»˝Œª±Ì æ÷°∫À≥§∂»
+  52   4                  if(!memcmp(frameCfmTail,&UART485_BUF[loop + corelen + 4],2)){  //÷°Œ≤–£—È£¨÷°Õ∑+µÿ÷∑“ªŒª+¿‡–Õ“ªŒª+÷°∫À≥
+             -§“ªŒª+œ¬“ªŒª£®‘Ωπ˝µ±«∞Œª£©/*µ⁄»˝≤„*/
+C51 COMPILER V9.54   485TRANS_USART                                                        12/08/2017 10:46:23 PAGE 2   
+
+  53   5                  
+  54   5                     memset(COREDATS,0,COREDATS_SIZE * sizeof(u8));     //÷°∫Àª∫¥Ê«Â¡„
+  55   5                     memcpy(COREDATS,&UART485_BUF[loop + 4],corelen);   //÷°Õ∑∫Ûµ⁄ÀƒŒªŒ™÷°∫ÀÕ∑◊÷Ω⁄£¨“‘¥ÀŒ™ø™∂À∏¥÷∆÷°∫À ˝æ›µΩ
+             -ª∫¥Ê
+  56   5                     memset(&UART485_BUF[loop],0,loop + corelen + 6);            //¿˙ ∑ ˝æ›∑œ∆˙«Â¡„  6£∫÷°Õ∑3 + ÷°∫À≥§1 + ÷°Œ≤2
+  57   5                  }           
+  58   4               }
+  59   3            }
+  60   2         }
+  61   1      }
+  62          
+  63          
+  64          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    241    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     22      17
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

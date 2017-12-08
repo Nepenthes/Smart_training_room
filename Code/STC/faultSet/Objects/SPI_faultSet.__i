@@ -1,0 +1,1 @@
+"Hardware\SPI_faultSet.c" OMF2 OPTIMIZE (8,SPEED) BROWSE INCDIR(..\faultSet;.\User;.\Hardware;.\StdPeriph_Driver) DEBUG PRINT(.\Listings\SPI_faultSet.lst) TABS (3) OBJECT(.\Objects\SPI_faultSet.obj)

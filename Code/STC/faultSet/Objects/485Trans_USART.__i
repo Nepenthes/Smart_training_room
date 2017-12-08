@@ -1,0 +1,1 @@
+"Hardware\485Trans_USART.c" OMF2 OPTIMIZE (8,SPEED) BROWSE INCDIR(..\faultSet;.\User;.\Hardware;.\StdPeriph_Driver) DEBUG PRINT(.\Listings\485Trans_USART.lst) TABS (3) OBJECT(.\Objects\485Trans_USART.obj)
