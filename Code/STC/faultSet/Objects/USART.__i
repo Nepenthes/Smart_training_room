@@ -1,0 +1,1 @@
+"StdPeriph_Driver\USART.C" OMF2 OPTIMIZE (8,SPEED) BROWSE INCDIR(..\faultSet;.\User;.\Hardware;.\StdPeriph_Driver) DEBUG PRINT(.\Listings\USART.lst) TABS (3) OBJECT(.\Objects\USART.obj)

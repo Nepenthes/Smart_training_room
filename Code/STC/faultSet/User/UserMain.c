@@ -9,6 +9,7 @@ xdata	u8 Disp_log[60] = {0};
 xdata	u8 temp_log[10] = {0};
 xdata	u8 loop;
 #endif
+
 #if(FUN_BOOTUP == MODE_A) 		//启动行为：正常启动
 	static u8 relayControlDats[RELAYDATS_SIZE];
 #if(RELAYDATS_CORRECT == 1)
@@ -31,25 +32,37 @@ xdata	u8 loop;
 		if(!memcmp(relayControlDats,COREDATS,RELAYDATS_SIZE)){	//是否为新数据
 		
 			memcpy(relayControlDats,COREDATS,RELAYDATS_SIZE);	//更新数据
-#if(DEBUG == ENABLE)
-			memset(Disp_log,0,LOGSIZE * sizeof(u8));
-			sprintf(Disp_log,"设故板数据已更新：");
-			for(loop = 0;loop < RELAYDATS_SIZE;loop ++){
-				
-				sprintf(temp_log,"%02X",relayControlDats[loop]);
-				strcat(Disp_log,temp_log);
-			}
-			Debug_log(Disp_log);
-#endif
-			Beep_time(80,40);		//更新提示
-			Beep_time(80,40);
+
+			switch(BD_type){
 			
-			Frame595Clr(RELAYDATS_SIZE);	//设故板数据清除
+				case BOARD_typeA:		
 #if(RELAYDATS_CORRECT == 1)		//是否需要进行倒序更正
-			BytesReverse(relayControlDats,temp,RELAYDATS_SIZE);	
-			Frame595Send(temp,RELAYDATS_SIZE);		//设故板执行倒序更正后的更新数据
+							BytesReverse(relayControlDats,temp,RELAYDATS_SIZE);	
+							Frame595Send(temp,RELAYDATS_SIZE);		//设故板执行倒序更正后的更新数据
 #endif			
-			Frame595Send(relayControlDats,RELAYDATS_SIZE);	//设故板执行更新数据
+							Frame595Send(relayControlDats,RELAYDATS_SIZE);	//设故板执行更新数据
+#if(DEBUG == ENABLE)
+							memset(Disp_log,0,LOGSIZE * sizeof(u8));
+							sprintf(Disp_log,"设故板数据已更新：");
+							for(loop = 0;loop < RELAYDATS_SIZE;loop ++){
+								
+								sprintf(temp_log,"%02X",relayControlDats[loop]);
+								strcat(Disp_log,temp_log);
+							}
+							Debug_log(Disp_log);
+#endif
+							Beep_time(80,40);		//更新提示
+							Beep_time(80,40);
+							
+							Frame595Clr(RELAYDATS_SIZE);	//设故板数据清除
+							break;
+							
+				case BOARD_typeB:	break;
+
+				case BOARD_typeC:	break;
+							
+							default: break;
+			}
 		}
 	}
 #elif(FUN_BOOTUP == MODE_B)	//启动行为：写入设故板类型

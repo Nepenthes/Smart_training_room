@@ -50,7 +50,7 @@ void Frame595Send(u8 Frame[],u8 length){	//595¶àÔª¸³Öµ
 	u8 loop;
 	
 	SPI_STP = 0;
-	for(loop = 0; loop < length; loop++)DatsIn595(Frame[loop]);	
+	for(loop = (length - 1); loop >= 0; loop++)DatsIn595(Frame[loop]);	
 	SPI_STP = 1;
 	SPI_STP = 0;
 }

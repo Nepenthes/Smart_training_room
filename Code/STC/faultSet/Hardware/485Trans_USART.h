@@ -9,6 +9,9 @@
 #include "GPIO.h"
 #include "delay.h"
 
+#define	FRAME_HEAD		0x7E
+#define	COM_ADDR			0x1B
+
 #define	UART485_BUF		RX2_Buffer
 #define	COREDATS_SIZE	16
 
