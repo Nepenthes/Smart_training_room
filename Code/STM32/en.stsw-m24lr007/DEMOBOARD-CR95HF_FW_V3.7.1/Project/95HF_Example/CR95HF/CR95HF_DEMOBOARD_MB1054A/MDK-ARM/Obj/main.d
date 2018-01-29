@@ -33,10 +33,6 @@
 .\obj\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\obj\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\obj\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB_Composite\inc\usb_pwr.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_core.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_type.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_conf.h
 .\obj\main.o: ..\..\..\..\..\libraries\95HF\inc\drv_uart.h
 .\obj\main.o: ..\inc\common.h
 .\obj\main.o: ..\..\..\..\..\libraries\95HF\inc\lib_nfctype1pcd.h
@@ -52,10 +48,3 @@
 .\obj\main.o: ..\..\..\..\..\libraries\95HF\inc\lib_iso15693pcd.h
 .\obj\main.o: ..\..\..\..\..\libraries\95HF\inc\lib_iso14443Bpcd.h
 .\obj\main.o: ..\..\..\..\..\Utilities\CR95HF_DEMOBOARD_MB1054A\LED\inc\drv_LED.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_lib.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_regs.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_def.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_init.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_mem.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_int.h
-.\obj\main.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_sil.h

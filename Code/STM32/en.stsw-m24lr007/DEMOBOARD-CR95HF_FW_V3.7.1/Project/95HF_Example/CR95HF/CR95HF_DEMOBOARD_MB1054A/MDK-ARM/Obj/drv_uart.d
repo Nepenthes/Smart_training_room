@@ -26,7 +26,3 @@
 .\obj\drv_uart.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\obj\drv_uart.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\obj\drv_uart.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
-.\obj\drv_uart.o: ..\..\..\..\..\libraries\USB_Composite\inc\usb_pwr.h
-.\obj\drv_uart.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_core.h
-.\obj\drv_uart.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_type.h
-.\obj\drv_uart.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_conf.h

@@ -30,10 +30,6 @@
 .\obj\lib_iso14443apcd.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\obj\lib_iso14443apcd.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\obj\lib_iso14443apcd.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
-.\obj\lib_iso14443apcd.o: ..\..\..\..\..\libraries\USB_Composite\inc\usb_pwr.h
-.\obj\lib_iso14443apcd.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_core.h
-.\obj\lib_iso14443apcd.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_type.h
-.\obj\lib_iso14443apcd.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_conf.h
 .\obj\lib_iso14443apcd.o: ..\..\..\..\..\libraries\95HF\inc\drv_uart.h
 .\obj\lib_iso14443apcd.o: ..\inc\common.h
 .\obj\lib_iso14443apcd.o: ..\..\..\..\..\libraries\95HF\inc\lib_nfctype1pcd.h

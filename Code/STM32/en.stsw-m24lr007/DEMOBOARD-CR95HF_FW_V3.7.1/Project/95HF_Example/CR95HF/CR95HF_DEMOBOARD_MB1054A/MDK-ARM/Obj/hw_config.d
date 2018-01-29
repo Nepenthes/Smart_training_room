@@ -25,7 +25,3 @@
 .\obj\hw_config.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\obj\hw_config.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\obj\hw_config.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
-.\obj\hw_config.o: ..\..\..\..\..\libraries\USB_Composite\inc\usb_pwr.h
-.\obj\hw_config.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_core.h
-.\obj\hw_config.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_type.h
-.\obj\hw_config.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_conf.h

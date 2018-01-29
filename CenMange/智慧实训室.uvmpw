@@ -9,6 +9,7 @@
 
   <project>
     <PathAndName>..\Code\STM32\CCBD\CCBD.uvprojx</PathAndName>
+    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
@@ -22,7 +23,6 @@
   <project>
     <PathAndName>..\Code\STM32\en.stsw-m24lr007\DEMOBOARD-CR95HF_FW_V3.7.1\Project\95HF_Example\CR95HF\CR95HF_DEMOBOARD_MB1054A\MDK-ARM\DEMO_BOARD_CR95HF.uvprojx</PathAndName>
     <NodeIsActive>1</NodeIsActive>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
 </ProjectWorkspace>

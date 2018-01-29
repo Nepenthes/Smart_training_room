@@ -28,8 +28,6 @@
 #include "lib_ConfigManager.h"
 #include "drv_LED.h"
 
-#include "usb_lib.h"
-
 /*  status and erroc code------------------------------------------------------ */
 #define MAIN_SUCCESS_CODE														RESULTOK
 

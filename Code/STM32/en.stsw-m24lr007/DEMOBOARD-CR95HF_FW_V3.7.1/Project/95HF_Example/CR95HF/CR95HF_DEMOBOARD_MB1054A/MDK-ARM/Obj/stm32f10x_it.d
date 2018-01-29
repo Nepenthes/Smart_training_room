@@ -25,9 +25,3 @@
 .\obj\stm32f10x_it.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\obj\stm32f10x_it.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\obj\stm32f10x_it.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
-.\obj\stm32f10x_it.o: ..\..\..\..\..\libraries\USB_Composite\inc\usb_pwr.h
-.\obj\stm32f10x_it.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_core.h
-.\obj\stm32f10x_it.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_type.h
-.\obj\stm32f10x_it.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_conf.h
-.\obj\stm32f10x_it.o: ..\..\..\..\..\libraries\USB_Composite\inc\usb_istr.h
-.\obj\stm32f10x_it.o: ..\..\..\..\..\libraries\USB-FS-Device_Driver\inc\usb_int.h

@@ -22,8 +22,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
-#include "usb_istr.h"
-#include "usb_int.h"
 
 /** @addtogroup User_Appli
   * @{
@@ -174,7 +172,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-	nb_ms_elapsed++;
+
 }
 
 
@@ -186,23 +184,6 @@ void SysTick_Handler(void)
 /** @addtogroup Peripherals Interrupt Handlers
  *  @{
  */
-
-/**
- *	@brief  This function handles USB High Priority or CAN TX interrupts requests
- */
-void USB_HP_IRQ_HANDLER(void)
-{
-  CTR_HP();
-}
-
-
-/**
- *	@brief  This function handles USB Low Priority or CAN RX0 interrupts requests.
- */
-void USB_LP_IRQ_HANDLER(void)
-{
-  USB_Istr();
-}
  
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */

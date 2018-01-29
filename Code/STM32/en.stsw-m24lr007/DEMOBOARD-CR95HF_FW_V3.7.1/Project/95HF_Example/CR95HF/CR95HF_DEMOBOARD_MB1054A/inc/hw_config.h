@@ -26,8 +26,6 @@
 
 #include "miscellaneous.h"
 
-#include "usb_pwr.h"
-
 #ifdef USE_MSD_DRIVE
 #include "mass_mal.h"
 #endif /*USE_MSD_DRIVE*/
@@ -82,7 +80,7 @@
  */
 #define USB_DISCONNECT_PIN                		GPIO_Pin_0
 #define USB_DISCONNECT                    		GPIOB  
-#define USB_DISCONNECT_GPIO_CLOCK   					RCC_APB2Periph_GPIOB
+#define USB_DISCONNECT_GPIO_CLOCK   			RCC_APB2Periph_GPIOB
 	
 /* -------------------------------------------------------------------------- 
 * Delay TIMER configuration (ms)

@@ -21,6 +21,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+extern ISO14443B_CARD 	ISO14443B_Card;
+extern ISO14443A_CARD 	ISO14443A_Card;
+extern uint8_t TagUID[16];
+extern FELICA_CARD 	FELICA_Card;
+
 /** @addtogroup User_Appli
  * 	@{
  *  @brief      <b>This folder contains the application files</b> 
@@ -66,6 +71,44 @@ extern int8_t	HIDTransaction;
 /**
   * @}
   */
+
+
+/**
+  * @brief  convert a ASCII coding byte to it's representing char.
+  * @param  pDataIn : pointer on the byte array to translate
+	* @param  NumberOfByte : the size of the array
+	* @param  pString : pointer on the string created
+  * @retval None
+  */
+  
+void Hex2Char( u8* pDataIn, u16 NumberOfByte, char* pString )
+{
+	u8 data;
+	uint8_t i=0;
+	
+	for(i=0; i<NumberOfByte; i++)
+	{
+		/* First char */
+		data = (*pDataIn & 0xF0)>>4;
+		if( data < 0x0A)
+			*pString = data + 0x30;  /* ASCII offset for number */
+		else
+			*pString = data + 0x37; 	/* ASCII offset for letter */
+	
+		pString++;
+	
+		/* Second char */
+		data = (*pDataIn & 0x0F);
+		if( data < 0x0A)
+			*pString = data + 0x30;  /* ASCII offset for number */
+		else
+			*pString = data + 0x37; 	/* ASCII offset for letter */
+	
+		pString++;
+		pDataIn++;
+	}
+	
+}
 
 /** @addtogroup Main_Public_Functions
  * 	@{
@@ -129,15 +172,13 @@ int main(void)
 {
 	uint8_t TagType = TRACK_NOTHING, tagfounds=TRACK_ALL;
 	
-	uint8_t cid_data[20];
-	
-	NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x000);
+	u8 i;
+	char UID[20] = {' '};
+	char InvertedUID[20] = {' '};
+	char LastUIDFound[20] = {' '};
 	
 	/* -- Configures Main system clocks & power */
 	Set_System();
-	
-	/* Enable CRC periph used by application to compute CRC after download */
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE);
 	  
 /*------------------- Resources Initialization -----------------------------*/
 	
@@ -145,25 +186,13 @@ int main(void)
 	Interrupts_Config();
 
 	/* configure the timers  */
-	Timer_Config( );
-	
-	/* Configure systick in order to generate one tick every ms */
-	/* also used to generate pseudo random numbers (SysTick->VAL) */
-	SysTick_Config(SystemCoreClock / 1000);
+	Timer_Config();
 	
 /*------------------- Drivers Initialization -------------------------------*/
 
   /* Led Configuration */
-  LED_Config(LED1);	
-
-	/* activate the USB clock */
-	Set_USBClock();
+	LED_Config(LED1);	
 	delay_ms(10);
-	/* initialize the USB  */
-	//USB_Init();
-	/* but prevent PC to control CR95HF */
-	//USB_Cable_Config(DISABLE);
-	//USB_Control_Allowed = false;
 		
 	/* ST95HF HW Init */
 	ConfigManager_HWInit();
@@ -174,31 +203,132 @@ int main(void)
 	delay_ms(400);
 	LED_Off(LED1);
 	
-	/* allow PC to control CR95HF */
-	USB_Cable_Config(DISABLE);
-	/* allow PC to control CR95HF */
-	USB_Control_Allowed = false;
+	forwardingSend("i'm here for you",16);
 	
 	while (1){
-    
-    if (HIDTransaction == false ){
 		
       TagType = ConfigManager_TagHunting(tagfounds);
       // Turn on the LED if a tag was founded
-      if (TagType == TRACK_NFCTYPE1  ||
-          TagType == TRACK_NFCTYPE2  ||
-          TagType == TRACK_NFCTYPE3  ||
-          TagType == TRACK_NFCTYPE4A || 
-          TagType == TRACK_NFCTYPE4B ||
-          TagType == TRACK_NFCTYPE5){
-		  
+		/* Check the tag type found */
+ 		if(TagType&TRACK_NFCTYPE1)
+		{
 			LED_On(LED1);
-			drv95HF_ReceiveSPIResponse(cid_data);
-			forwardingSend(cid_data,10);
-		  } 
-      else 
-          LED_Off(LED1);
-    } 
+			Hex2Char( TagUID, 6, UID);
+	
+			for(i=0; i<12; i=i+2)
+			{
+				InvertedUID[11-i] = UID[i+1];
+				InvertedUID[11-(i+1)] = UID[i];
+			}
+			memcpy(&InvertedUID[17],"TT1",3);
+			/* Set the Text Color */
+			if(memcmp (LastUIDFound, TagUID, 6))
+			{	
+				memcpy(LastUIDFound,TagUID,6);
+				
+				forwardingSend((uint8_t*)InvertedUID,strlen((const char*)InvertedUID));			
+			}
+			else
+			{
+				
+			}
+		}
+		else if (TagType&TRACK_NFCTYPE2)
+		{	
+			LED_On(LED1);
+			Hex2Char( ISO14443A_Card.UID, ISO14443A_Card.UIDsize, UID);
+			
+			memcpy(&UID[17],"TT2",3);
+			if(memcmp (LastUIDFound, ISO14443A_Card.UID, ISO14443A_Card.UIDsize))
+			{	
+				memcpy(LastUIDFound,ISO14443A_Card.UID,ISO14443A_Card.UIDsize);	
+				
+				forwardingSend((uint8_t*)UID,strlen((const char*)UID));
+			}
+			else
+			{
+				
+			}
+		}
+		else if (TagType&TRACK_NFCTYPE3)
+		{
+			LED_On(LED1);
+			Hex2Char( FELICA_Card.UID, 8 , UID);
+			
+			memcpy(&UID[17],"TT3",3);
+			
+			if(memcmp (LastUIDFound, FELICA_Card.UID, 8))
+			{	
+				memcpy(LastUIDFound,FELICA_Card.UID,8);
+				
+				forwardingSend((uint8_t*)UID,strlen((const char*)UID));			
+			}
+			else
+			{
+				
+			}
+		}
+		else if (TagType&TRACK_NFCTYPE4A)
+		{	
+			LED_On(LED1);
+			Hex2Char( ISO14443A_Card.UID, ISO14443A_Card.UIDsize, UID);
+			
+			memcpy(&UID[16],"TT4A",4);
+			
+			if(memcmp (LastUIDFound, ISO14443A_Card.UID, ISO14443A_Card.UIDsize))
+			{	
+				memcpy(LastUIDFound,ISO14443A_Card.UID,ISO14443A_Card.UIDsize);	
+				
+				forwardingSend((uint8_t*)UID,strlen((const char*)UID));
+			}
+			else
+			{
+				
+			}
+		}
+		else if (TagType&TRACK_NFCTYPE4B)
+		{	
+			LED_On(LED1);
+			Hex2Char( ISO14443B_Card.PUPI, 4 , UID);
+		
+			memcpy(&UID[16],"TT4B",4);
+	
+			if(memcmp (LastUIDFound, ISO14443B_Card.PUPI, 4))
+			{	
+				memcpy(LastUIDFound,ISO14443B_Card.PUPI,4);		
+				
+				forwardingSend((uint8_t*)UID,strlen((const char*)UID));
+			}
+			else
+			{
+				
+			}
+		}
+		else if (TagType&TRACK_NFCTYPE5)
+		{
+			LED_On(LED1);
+			Hex2Char( TagUID, 8, UID);
+			
+			for(i=0; i<16; i=i+2)
+			{
+				InvertedUID[15-i] = UID[i+1];
+				InvertedUID[15-(i+1)] = UID[i];
+			}
+			memcpy(&InvertedUID[17],"TT5",3);
+
+			if(memcmp (LastUIDFound, TagUID, 8))
+			{	
+				memcpy(LastUIDFound,TagUID,8);		
+				
+				forwardingSend((uint8_t*)InvertedUID,strlen((const char*)InvertedUID));
+			}
+			else
+			{
+				
+			}
+		}
+		else /* No supported tags found */
+			LED_Off(LED1);
 	
 	delay_ms(20); 
 		

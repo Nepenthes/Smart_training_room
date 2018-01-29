@@ -165,48 +165,6 @@ void Set_System(void)
 }
 
 /**
- *	@brief  Configures USB Clock input (48MHz)
- */
-void Set_USBClock(void)
-{
-  /* Select USBCLK source */
-  RCC_USBCLKConfig(RCC_USBCLKSource_PLLCLK_1Div5);
-  
-  /* Enable the USB clock */
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USB, ENABLE);
-}
-
-/**
- *	@brief  Power-off system clocks and power while entering suspend mode
- */
-void Enter_LowPowerMode(void)
-{
-  /* Set the device state to suspend */
-  bDeviceState = SUSPENDED;
-}
-
-
-/**
- *	@brief  Restores system clocks and power while exiting suspend mode
- */
-void Leave_LowPowerMode(void)
-{
-  DEVICE_INFO *pInfo = &Device_Info;
-
-  /* Set the device state to the correct state */
-  if (pInfo->Current_Configuration != 0)
-  {
-    /* Device configured */
-    bDeviceState = CONFIGURED;
-  }
-  else
-  {
-    bDeviceState = ATTACHED;
-  }
-
-}
-
-/**
  *	@brief  Configures the interrupts
  *  @param  None
  *  @retval None
@@ -246,19 +204,6 @@ void Interrupts_Config (void)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority 		 			= TIMER_DELAY_SUB_PRIORITY;
 	NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
 	NVIC_Init(&NVIC_InitStructure);						 	
-
-
-  NVIC_InitStructure.NVIC_IRQChannel 											= USB_LP_IRQ_CHANNEL;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= USB_LP_PREEMPTION_PRIORITY;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority 					= USB_LP_SUB_PRIORITY;
-  NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
-
-  NVIC_InitStructure.NVIC_IRQChannel 											= USB_HP_IRQ_CHANNEL;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= USB_HP_PREEMPTION_PRIORITY;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority 					= USB_HP_SUB_PRIORITY;
-  NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
 	
 	/* Enable the EXTI9_5 Interrupt */
   NVIC_InitStructure.NVIC_IRQChannel 											= EXTI9_5_IRQn;
@@ -275,23 +220,6 @@ void Interrupts_Config (void)
 	
 }
 
-
-/**
- *	@brief  This function Connects or disconnects the MCU from the USB 
- *  @param  NewState : ENABLE or DISABLE value
- */
-void USB_Cable_Config (FunctionalState NewState)
-{
-
-  if (NewState != DISABLE)
-  {
-    GPIO_ResetBits(USB_DISCONNECT, USB_DISCONNECT_PIN);
-  }
-  else
-  {
-    GPIO_SetBits(USB_DISCONNECT, USB_DISCONNECT_PIN);
-  }
-}
 #ifdef USE_MSD_DRIVE
 
 /**
@@ -314,22 +242,6 @@ void Get_SerialNum(void)
     IntToUnicode (Device_Serial1, &COMPOSITE_StringSerial[18], 6);
   }
 }
-
-
-/**
-* @brief  Reboot the USB Connection
-* @retval PICC_SUCCESSCODE : the function is succesful
-*/	
-void USB_RebootMSD(void)
-{
-		/*Use the PIN USB Disconnect to stop the data exchange in the USB Bus*/
-		GPIO_SetBits(USB_DISCONNECT, USB_DISCONNECT_PIN);
-		delayHighPriority_ms(1000);
-		GPIO_ResetBits(USB_DISCONNECT, USB_DISCONNECT_PIN);
-		delayHighPriority_ms(1000);		
-
-}	
-
 
 /**
  *	@brief  Convert Hex 32Bits value into char. 
@@ -444,7 +356,6 @@ void Timer_Structure_Config( void )
 		
 	/* Enable TIMER Update interrupt */
 	TIM_ITConfig(TIMER_DELAY, TIM_IT_Update, ENABLE);
-	
 }
 
 /**
