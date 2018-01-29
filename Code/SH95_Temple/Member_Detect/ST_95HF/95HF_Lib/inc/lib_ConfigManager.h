@@ -25,6 +25,7 @@
 #define CR95HF
 
 /* Includes -------------------------------------------------------------------------*/
+
 #if defined(ST95HF) || defined(RX95HF)
 	#include "lib_PICCemulator.h"
 #endif

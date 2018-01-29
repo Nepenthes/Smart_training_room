@@ -23,6 +23,8 @@
 #define __LIB_ISO14443B_H
 
 #include "lib_PCD.h"
+
+#include "delay.h"
  
 /*  status and error code ---------------------------------------------------------------------- */
 #define ISO14443B_SUCCESSCODE											RESULTOK

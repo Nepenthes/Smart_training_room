@@ -51,7 +51,7 @@
  *	@brief  this uTimeOut variable is used as a timeout duting the communication with the RF tranceiver
  */
 extern __IO uint8_t						uTimeOut;
-extern volatile bool										uAppliTimeOut;
+extern volatile bool					uAppliTimeOut;
 
 extern volatile bool RF_DataExpected;
 extern volatile bool uDataReady;
@@ -170,8 +170,8 @@ void drvInt_AppliTimeoutTimerConfig(void)
 	 * 72 MHz / 72 = 1MHz (1us)
 	 * 1us * 1000 + 1us ~= 1ms	
 	 * -------------------------------------------------------------------------- */
-	TIM_TimeBaseStructure.TIM_Period 					= APPLI_TIMER_TIMEOUT_PERIOD;     
-	TIM_TimeBaseStructure.TIM_Prescaler 			= APPLI_TIMER_TIMEOUT_PRESCALER;       
+	TIM_TimeBaseStructure.TIM_Period 			= APPLI_TIMER_TIMEOUT_PERIOD;     
+	TIM_TimeBaseStructure.TIM_Prescaler 		= APPLI_TIMER_TIMEOUT_PRESCALER;       
 	TIM_TimeBaseStructure.TIM_ClockDivision 	= TIM_CKD_DIV1;      
 	TIM_TimeBaseStructure.TIM_CounterMode 		= TIM_CounterMode_Down;	  
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
@@ -221,11 +221,11 @@ void StopAppliTimeOut( void )
  */
 void SendSPINSSPulse(void)
 {
-		RFTRANS_95HF_NSS_HIGH() ;
+		RFTRANS_95HF_NSS_HIGH();
 		delayHighPriority_ms(1);
-		RFTRANS_95HF_NSS_LOW() ;
+		RFTRANS_95HF_NSS_LOW();
 		delayHighPriority_ms(1);
-		RFTRANS_95HF_NSS_HIGH() ;
+		RFTRANS_95HF_NSS_HIGH();
 }
 
 /**

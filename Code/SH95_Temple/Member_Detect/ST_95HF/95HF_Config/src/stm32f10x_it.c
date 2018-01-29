@@ -187,18 +187,6 @@ void RFTRANS_95HF_IRQ_HANDLER ( void )
 }
 
 /**
- * @brief  This function handles the timer interrupt.
- * @param  None
- * @retval None
- */
-void TIMER_DELAY_IRQ_HANDLER(void)
-{
-	/* Clear TIMER update interrupt flag */
-	TIM_ClearITPendingBit(TIMER_DELAY, TIM_IT_Update);
-	decrement_delay();
-}
-
-/**
   * @}
   */
 

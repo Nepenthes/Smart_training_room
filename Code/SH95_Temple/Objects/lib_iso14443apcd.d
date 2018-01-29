@@ -32,5 +32,9 @@
 .\objects\lib_iso14443apcd.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\lib_iso14443apcd.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\objects\lib_iso14443apcd.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\lib_iso14443apcd.o: .\Usr\delay.h
+.\objects\lib_iso14443apcd.o: .\Usr\osObjects.h
+.\objects\lib_iso14443apcd.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
+.\objects\lib_iso14443apcd.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\lib_iso14443apcd.o: .\Member_Detect\ST_95HF\95HF_Config\inc\common.h
 .\objects\lib_iso14443apcd.o: .\Member_Detect\ST_95HF\95HF_Lib\inc\lib_iso14443A.h

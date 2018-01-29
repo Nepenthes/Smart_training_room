@@ -29,3 +29,7 @@
 .\objects\drv_95hf.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\drv_95hf.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\objects\drv_95hf.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\drv_95hf.o: .\Usr\delay.h
+.\objects\drv_95hf.o: .\Usr\osObjects.h
+.\objects\drv_95hf.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
+.\objects\drv_95hf.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stddef.h

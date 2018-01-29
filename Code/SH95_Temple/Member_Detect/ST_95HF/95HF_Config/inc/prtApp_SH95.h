@@ -28,6 +28,8 @@
 #include "lib_ConfigManager.h"
 #include "drv_LED.h"
 
+#include "Driver_USART.h"
+
 /*  status and erroc code------------------------------------------------------ */
 #define MAIN_SUCCESS_CODE														RESULTOK
 
@@ -38,6 +40,9 @@ extern bool HID_TRANSACTION;
 /* Exported function --------------------------------------------------------*/
 void Decrement_TimingDelay(void);
 
+void devApp95HF_Thread(const void *argument);
+
+void devApp95HF_ThreadActive(void);
 
 /* exported constants --------------------------------------------------------*/
 

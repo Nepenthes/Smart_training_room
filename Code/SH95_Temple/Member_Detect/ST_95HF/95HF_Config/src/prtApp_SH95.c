@@ -19,12 +19,17 @@
   */ 
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "prtApp_SH95.h"
 
 extern ISO14443B_CARD 	ISO14443B_Card;
 extern ISO14443A_CARD 	ISO14443A_Card;
 extern uint8_t TagUID[16];
 extern FELICA_CARD 	FELICA_Card;
+
+extern ARM_DRIVER_USART Driver_USART1;
+
+osThreadId tid_devApp95HF_Thread;
+osThreadDef(devApp95HF_Thread,osPriorityNormal,	1,	2048);
 
 /** @addtogroup User_Appli
  * 	@{
@@ -107,7 +112,6 @@ void Hex2Char( u8* pDataIn, u16 NumberOfByte, char* pString )
 		pString++;
 		pDataIn++;
 	}
-	
 }
 
 /** @addtogroup Main_Public_Functions
@@ -119,76 +123,44 @@ void Hex2Char( u8* pDataIn, u16 NumberOfByte, char* pString )
   * @param  None
   * @retval None
   */
-  
-void usr_fwdUARTInit(void){
 
-	GPIO_InitTypeDef GPIO_InitStructure;
-	USART_InitTypeDef USART_InitStructure;
-	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_AFIO | RCC_APB2Periph_GPIOA,ENABLE);    
+void USART1_callback(uint32_t event){
 
-	/* Configure USART Tx as ouput alternate function push pull*/
-	GPIO_InitStructure.GPIO_Pin 	= GPIO_Pin_9;
-	GPIO_InitStructure.GPIO_Speed 	= GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode 	= GPIO_Mode_AF_PP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	
-	/* Configure USART Rx as input floating */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(GPIOA, &GPIO_InitStructure); 
-	
-	USART_InitStructure.USART_BaudRate 			= 115200;
-	USART_InitStructure.USART_WordLength 		= USART_WordLength_8b;
-	USART_InitStructure.USART_StopBits 			= USART_StopBits_1;
-	USART_InitStructure.USART_Parity 			= USART_Parity_No;
-	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	USART_InitStructure.USART_Mode 				= USART_Mode_Rx | USART_Mode_Tx;
-
-	/* Configure USART */
-	USART_Init(USART1, &USART_InitStructure);
-
-	/* Enable the USART */
-	USART_Cmd(USART1, ENABLE);
+	;
 }
 
-void forwardingPutChar(uint8_t Data){
+void USART1_dev95HF_Init(void){
 
-    USART_SendData(USART1, Data);  
-    while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET){}  
-}
+    /*Initialize the USART driver */
+    Driver_USART1.Initialize(USART1_callback);
+    /*Power up the USART peripheral */
+    Driver_USART1.PowerControl(ARM_POWER_FULL);
+    /*Configure the USART to 115200 Bits/sec */
+    Driver_USART1.Control(ARM_USART_MODE_ASYNCHRONOUS |
+                          ARM_USART_DATA_BITS_8 |
+                          ARM_USART_PARITY_NONE |
+                          ARM_USART_STOP_BITS_1 |
+                          ARM_USART_FLOW_CONTROL_NONE, 115200);
 
-void forwardingSend(uint8_t *pData ,uint8_t length){
+    /* Enable Receiver and Transmitter lines */
+    Driver_USART1.Control (ARM_USART_CONTROL_TX, 1);
+    Driver_USART1.Control (ARM_USART_CONTROL_RX, 1);
+	
+    Driver_USART1.Send("i'm usart1 for Android\r\n", 25);
+} 
 
-	uint8_t loop;
+void dev95HF_Init(void){
 	
-	for(loop = 0;loop < length;loop ++){
-	
-		forwardingPutChar(*pData ++);
-	}
-}
-  
-int main(void)
-{
-	uint8_t TagType = TRACK_NOTHING, tagfounds=TRACK_ALL;
-	
-	u8 i;
-	char UID[20] = {' '};
-	char InvertedUID[20] = {' '};
-	char LastUIDFound[20] = {' '};
-	
-	/* -- Configures Main system clocks & power */
+/* -- Configures Main system clocks & power */
 	RCC_APB2PeriphClockCmd(USB_DISCONNECT_GPIO_CLOCK, ENABLE);
 	  
 /*------------------- Resources Initialization -----------------------------*/
 	
 	/* configure the interuptions  */
 	Interrupts_Config();
-
-	/* configure the timers  */
-	Timer_Config();
 	
 /*------------------- Drivers Initialization -------------------------------*/
+	USART1_dev95HF_Init();
 
   /* Led Configuration */
 	LED_Config(LED1);	
@@ -196,14 +168,20 @@ int main(void)
 		
 	/* ST95HF HW Init */
 	ConfigManager_HWInit();
-	
-	usr_fwdUARTInit();
   
 	LED_On(LED1);
 	delay_ms(400);
 	LED_Off(LED1);
+}
+  
+void prtApp_95HF(void)
+{
+	uint8_t TagType = TRACK_NOTHING, tagfounds=TRACK_ALL;
 	
-	forwardingSend("i'm here for you",16);
+	u8 i;
+	char UID[20] = {' '};
+	char InvertedUID[20] = {' '};
+	char LastUIDFound[20] = {' '};
 	
 	while (1){
 		
@@ -226,7 +204,7 @@ int main(void)
 			{	
 				memcpy(LastUIDFound,TagUID,6);
 				
-				forwardingSend((uint8_t*)InvertedUID,strlen((const char*)InvertedUID));			
+				Driver_USART1.Send((uint8_t*)InvertedUID,strlen((const char*)InvertedUID));			
 			}
 			else
 			{
@@ -243,7 +221,7 @@ int main(void)
 			{	
 				memcpy(LastUIDFound,ISO14443A_Card.UID,ISO14443A_Card.UIDsize);	
 				
-				forwardingSend((uint8_t*)UID,strlen((const char*)UID));
+				Driver_USART1.Send((uint8_t*)UID,strlen((const char*)UID));
 			}
 			else
 			{
@@ -261,7 +239,7 @@ int main(void)
 			{	
 				memcpy(LastUIDFound,FELICA_Card.UID,8);
 				
-				forwardingSend((uint8_t*)UID,strlen((const char*)UID));			
+				Driver_USART1.Send((uint8_t*)UID,strlen((const char*)UID));			
 			}
 			else
 			{
@@ -279,7 +257,7 @@ int main(void)
 			{	
 				memcpy(LastUIDFound,ISO14443A_Card.UID,ISO14443A_Card.UIDsize);	
 				
-				forwardingSend((uint8_t*)UID,strlen((const char*)UID));
+				Driver_USART1.Send((uint8_t*)UID,strlen((const char*)UID));
 			}
 			else
 			{
@@ -297,7 +275,7 @@ int main(void)
 			{	
 				memcpy(LastUIDFound,ISO14443B_Card.PUPI,4);		
 				
-				forwardingSend((uint8_t*)UID,strlen((const char*)UID));
+				Driver_USART1.Send((uint8_t*)UID,strlen((const char*)UID));
 			}
 			else
 			{
@@ -320,7 +298,7 @@ int main(void)
 			{	
 				memcpy(LastUIDFound,TagUID,8);		
 				
-				forwardingSend((uint8_t*)InvertedUID,strlen((const char*)InvertedUID));
+				Driver_USART1.Send((uint8_t*)InvertedUID,strlen((const char*)InvertedUID));
 			}
 			else
 			{
@@ -331,32 +309,67 @@ int main(void)
 			LED_Off(LED1);
 	
 	delay_ms(20); 
-		
-//	forwardingSend("abc",3);
-//    delay_ms(1000);
+  }
+}
+
+void devApp95HF_Thread(const void *argument){
+
+	prtApp_95HF();
+}
+
+void devApp95HF_ThreadActive(void){
+
+	dev95HF_Init();
+	tid_devApp95HF_Thread = osThreadCreate(osThread(devApp95HF_Thread),NULL);
+}
+
+//void usr_fwdUARTInit(void){
+
+//	GPIO_InitTypeDef GPIO_InitStructure;
+//	USART_InitTypeDef USART_InitStructure;
 //	
-//	LED_On(LED1);
-//	delay_ms(400);
-//	LED_Off(LED1);
-  }
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_AFIO | RCC_APB2Periph_GPIOA,ENABLE);    
 
-}
+//	/* Configure USART Tx as ouput alternate function push pull*/
+//	GPIO_InitStructure.GPIO_Pin 	= GPIO_Pin_9;
+//	GPIO_InitStructure.GPIO_Speed 	= GPIO_Speed_50MHz;
+//	GPIO_InitStructure.GPIO_Mode 	= GPIO_Mode_AF_PP;
+//	GPIO_Init(GPIOA, &GPIO_InitStructure);
+//	
+//	/* Configure USART Rx as input floating */
+//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+//	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+//	GPIO_Init(GPIOA, &GPIO_InitStructure); 
+//	
+//	USART_InitStructure.USART_BaudRate 			= 115200;
+//	USART_InitStructure.USART_WordLength 		= USART_WordLength_8b;
+//	USART_InitStructure.USART_StopBits 			= USART_StopBits_1;
+//	USART_InitStructure.USART_Parity 			= USART_Parity_No;
+//	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+//	USART_InitStructure.USART_Mode 				= USART_Mode_Rx | USART_Mode_Tx;
 
+//	/* Configure USART */
+//	USART_Init(USART1, &USART_InitStructure);
 
-/**
-  * @brief  Decrements the TimingDelay variable. 
-  * @param  None
-  * @retval None
-	*/
-void Decrement_TimingDelay(void)
-{
-  if (TimingDelay != 0x00)
-  {
-    TimingDelay--;
-  }
-}
+//	/* Enable the USART */
+//	USART_Cmd(USART1, ENABLE);
+//}
 
+//void forwardingPutChar(uint8_t Data){
 
+//    USART_SendData(USART1, Data);  
+//    while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET){}  
+//}
+
+//void forwardingSend(uint8_t *pData ,uint8_t length){
+
+//	uint8_t loop;
+//	
+//	for(loop = 0;loop < length;loop ++){
+//	
+//		forwardingPutChar(*pData ++);
+//	}
+//}
 
 /**
   * @}

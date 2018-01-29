@@ -20,6 +20,8 @@
 
 #include "lib_PCD.h"
 
+#include "delay.h"
+
 #define RFU 									0
 #define ISO15693_PROTOCOL              			0x01
 #define ISO15693_SELECTLENGTH          			0x02

@@ -1,9 +1,12 @@
-.\objects\main.o: Member_Detect\ST_95HF\95HF_Config\src\main.c
-.\objects\main.o: .\Member_Detect\ST_95HF\95HF_Config\inc\main.h
+.\objects\main.o: Usr\main.c
+.\objects\main.o: Usr\osObjects.h
+.\objects\main.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
+.\objects\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\main.o: .\Member_Detect\ST_95HF\95HF_Config\inc\prtApp_SH95.h
 .\objects\main.o: D:\Keil\Software\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include\stm32f10x.h
 .\objects\main.o: E:\My_GTAProject\Project_SmartTraningRoom\software\Code\SH95_Temple\RTE\RTE_Components.h
 .\objects\main.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Include\core_cm3.h
-.\objects\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Include\cmsis_version.h
 .\objects\main.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Include\cmsis_compiler.h
 .\objects\main.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Include\cmsis_armcc.h
@@ -35,6 +38,7 @@
 .\objects\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: .\Usr\delay.h
 .\objects\main.o: .\Member_Detect\ST_95HF\95HF_Lib\inc\drv_uart.h
 .\objects\main.o: .\Member_Detect\ST_95HF\95HF_Config\inc\common.h
 .\objects\main.o: .\Member_Detect\ST_95HF\95HF_Lib\inc\lib_nfctype1pcd.h
@@ -50,3 +54,5 @@
 .\objects\main.o: .\Member_Detect\ST_95HF\95HF_Lib\inc\lib_iso15693pcd.h
 .\objects\main.o: .\Member_Detect\ST_95HF\95HF_Lib\inc\lib_iso14443Bpcd.h
 .\objects\main.o: .\Member_Detect\ST_95HF\95HF_prtApp\inc\drv_LED.h
+.\objects\main.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Driver\Include\Driver_USART.h
+.\objects\main.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Driver\Include\Driver_Common.h

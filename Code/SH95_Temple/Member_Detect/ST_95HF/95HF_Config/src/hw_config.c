@@ -37,12 +37,6 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
-static __IO uint16_t					counter_delay_ms;
-
-/* Private functions Prototype -----------------------------------------------*/
-static void TimerDelay_us_Config	( void );
-static void TimerDelay_ms_Config	( void );
-
 #ifdef USE_MSD_DRIVE
 static void IntToUnicode (uint32_t value, uint8_t *pbuf, uint8_t len);
 #endif /*USE_MSD_DRIVE*/
@@ -51,65 +45,6 @@ static void IntToUnicode (uint32_t value, uint8_t *pbuf, uint8_t len);
  * 	@{
  */
 
-/**
- *	@brief Structure configuration for the Timer2 in ms
- *  @param  None
- *  @retval None
- */
-static void TimerDelay_ms_Config( void )
-{
-    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-
-    /* --------------------------------------------------------------------------
-     * Delay TIMER configuration
-     * -------------------------------------------------------------------------- */
-    TIM_TimeBaseStructure.TIM_Period 			= TIMER_DELAY_PERIOD;
-    TIM_TimeBaseStructure.TIM_Prescaler 		= TIMER_DELAY_PRESCALER;
-    TIM_TimeBaseStructure.TIM_ClockDivision 	= TIM_CKD_DIV1;
-    TIM_TimeBaseStructure.TIM_CounterMode 		= TIM_CounterMode_Up;
-    TIM_TimeBaseInit(TIMER_DELAY, &TIM_TimeBaseStructure);
-
-    TIM_UpdateRequestConfig(TIMER_DELAY, TIM_UpdateSource_Global);
-
-    TIM_ClearITPendingBit(TIMER_DELAY, TIM_IT_Update);
-
-    /* Enable TIMER Update interrupt */
-    TIM_ITConfig(TIMER_DELAY, TIM_IT_Update, ENABLE);
-
-
-    /* Disable timer	*/
-    TIM_Cmd(TIMER_DELAY, DISABLE);
-}
-
-/**
- *	@brief Structure configuration for the Timer2 in us
- *  @param  None
- *  @retval None
- */
-static void TimerDelay_us_Config( void )
-{
-    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-
-    /* --------------------------------------------------------------------------
-    * Delay TIMER configuration (us)
-    * -------------------------------------------------------------------------- */
-    TIM_TimeBaseStructure.TIM_Period 			= TIMER_US_DELAY_PERIOD;
-    TIM_TimeBaseStructure.TIM_Prescaler 		= TIMER_US_DELAY_PRESCALER;
-    TIM_TimeBaseStructure.TIM_ClockDivision 	= TIM_CKD_DIV1;
-    TIM_TimeBaseStructure.TIM_CounterMode 		= TIM_CounterMode_Up;
-    TIM_TimeBaseInit(TIMER_US_DELAY, &TIM_TimeBaseStructure);
-
-    TIM_UpdateRequestConfig(TIMER_US_DELAY, TIM_UpdateSource_Global);
-
-    TIM_ClearITPendingBit(TIMER_US_DELAY, TIM_IT_Update);
-
-    /* Enable TIMER Update interrupt */
-    TIM_ITConfig(TIMER_US_DELAY, TIM_IT_Update, ENABLE);
-
-    /* Disable timer	*/
-    TIM_Cmd(TIMER_DELAY, DISABLE);
-
-}
 
 /**
  *	@brief  Configures the interrupts
@@ -124,45 +59,24 @@ void Interrupts_Config (void)
 
 #ifdef SPI_INTERRUPT_MODE_ACTIVATED
     /* Enable and set RF transceiver IRQ to the lowest priority */
-    NVIC_InitStructure.NVIC_IRQChannel 										= EXTI_RFTRANS_95HF_IRQ_CHANNEL;
+    NVIC_InitStructure.NVIC_IRQChannel 						= EXTI_RFTRANS_95HF_IRQ_CHANNEL;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 	= EXTI_RFTRANS_95HF_PREEMPTION_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 				= EXTI_RFTRANS_95HF_SUB_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 								= ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority 			= EXTI_RFTRANS_95HF_SUB_PRIORITY;
+    NVIC_InitStructure.NVIC_IRQChannelCmd 					= ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 #endif /* SPI_INTERRUPT_MODE_ACTIVATED */
 
-    /* Enable and set TIMER IRQ used for timeout */
-    NVIC_InitStructure.NVIC_IRQChannel 											= TIMER_TIMEOUT_IRQ_CHANNEL;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= TIMER_TIMEOUT_PREEMPTION_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 		 			= TIMER_TIMEOUT_SUB_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
-
-    /* Enable and set TIMER IRQ used for appli timeout */
-    NVIC_InitStructure.NVIC_IRQChannel 											= APPLI_TIMER_TIMEOUT_IRQ_CHANNEL;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= APPLI_TIMER_TIMEOUT_PREEMPTION_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 		 			= APPLI_TIMER_TIMEOUT_SUB_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
-
-    /* Enable and set TIMER IRQ used for delays */
-    NVIC_InitStructure.NVIC_IRQChannel 					 						= TIMER_DELAY_IRQ_CHANNEL;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= TIMER_DELAY_PREEMPTION_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 		 			= TIMER_DELAY_SUB_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
-
     /* Enable the EXTI9_5 Interrupt */
-    NVIC_InitStructure.NVIC_IRQChannel 											= EXTI9_5_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 					= 0;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannel 						= EXTI9_5_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 	= 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority 			= 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd 					= ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 
-    NVIC_InitStructure.NVIC_IRQChannel 											= EXTI4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 					= 1;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 									= ENABLE;
+    NVIC_InitStructure.NVIC_IRQChannel 						= EXTI4_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 	= 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority 			= 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd 					= ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 
 }
@@ -193,7 +107,7 @@ void Get_SerialNum(void)
 /**
  *	@brief  Convert Hex 32Bits value into char.
  */
-static void IntToUnicode (uint32_t value, uint8_t *pbuf, uint8_t len)
+static void IntToUnicode(uint32_t value, uint8_t *pbuf, uint8_t len)
 {
     uint8_t idx = 0;
 
@@ -225,129 +139,6 @@ void MAL_Config(void)
 }
 #endif /*USE_MSD_DRIVE*/
 
-
-/**
- *	@brief  This function configurates the disconnects pin
- *  @param  None
- *  @retval None
- */
-void USB_Disconnect_Config(void)
-{
-//    GPIO_InitTypeDef GPIO_InitStructure;
-
-    /* Enable USB_DISCONNECT GPIO clock */
-    RCC_APB2PeriphClockCmd(USB_DISCONNECT_GPIO_CLOCK, ENABLE);
-
-//    /* USB_DISCONNECT_PIN used as USB pull-up */
-//    GPIO_InitStructure.GPIO_Pin = USB_DISCONNECT_PIN;
-//    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-//    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-//    GPIO_Init(USB_DISCONNECT, &GPIO_InitStructure);
-}
-
-/**
- *	@brief  This function configures the Timers
- *  @param  None
- *  @retval None
- */
-void Timer_Config( void )
-{
-    Timer_RCC_Config( );
-    Timer_Structure_Config( );
-}
-
-/**
- *	@brief  This function configures RCC for the Timers
- *  @param  None
- *  @retval None
- */
-void Timer_RCC_Config( void )
-{
-    /*	enable TIM2 & TIM3 & TIM4 */
-    RCC_APB1PeriphClockCmd(		TIMER_TIMEOUT_CLOCK 	|
-                                APPLI_TIMER_TIMEOUT_CLOCK 	|
-                                TIMER_DELAY_CLOCK 		,
-                                ENABLE);
-}
-
-/**
- *	@brief  Structure configuration for the Timers
- *  @param  None
- *  @retval None
- */
-void Timer_Structure_Config( void )
-{
-    TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
-
-    /* TIM3 driver timeout */
-    drvInt_TimeoutTimerConfig();
-
-    /* TIM4 appli timeout */
-    drvInt_AppliTimeoutTimerConfig();
-
-    /* --------------------------------------------------------------------------
-     * Delay TIMER configuration
-     * --------------------------------------------------------------------------
-     * 72 MHz / 72 = 1MHz (1µs)
-     * 1µs * 1000 + 1µs ~= 1ms
-     * -------------------------------------------------------------------------- */
-    TIM_TimeBaseStructure.TIM_Period 			= TIMER_DELAY_PERIOD;
-    TIM_TimeBaseStructure.TIM_Prescaler 		= (TIMER_DELAY_PRESCALER-1);
-    TIM_TimeBaseStructure.TIM_ClockDivision 	= TIM_CKD_DIV1;
-    TIM_TimeBaseStructure.TIM_CounterMode 		= TIM_CounterMode_Up;
-    TIM_TimeBaseInit(TIMER_DELAY, &TIM_TimeBaseStructure);
-
-    TIM_UpdateRequestConfig(TIMER_DELAY, TIM_UpdateSource_Global);
-
-    TIM_ClearITPendingBit(TIMER_DELAY, TIM_IT_Update);
-
-    /* Enable TIMER Update interrupt */
-    TIM_ITConfig(TIMER_DELAY, TIM_IT_Update, ENABLE);
-}
-
-/**
- *	@brief  Time delay in millisecond
- *  @param  delay : delay in ms.
- *  @retval none
- */
-void delay_ms(uint16_t delay)
-{
-    counter_delay_ms = (delay+1);
-
-    TimerDelay_ms_Config ();
-
-    TIM_SetCounter(TIMER_DELAY, 0);
-    /* TIM2 enable counter */
-    TIM_Cmd(TIMER_DELAY, ENABLE);
-    /* Wait for 'delay' milliseconds */
-    while(counter_delay_ms != 0);
-    /* TIM2 disable counter */
-    TIM_Cmd(TIMER_DELAY, DISABLE);
-}
-
-
-/**
- *	@brief  Time delay in microsecond
- *  @param  delay : delay in us.
- *  @retval none
- */
-void delay_us(uint16_t delay)
-{
-    counter_delay_ms = delay;
-
-    TimerDelay_us_Config ();
-
-    TIM_SetCounter(TIMER_US_DELAY, 0);
-    /* TIM2 enable counter */
-    TIM_Cmd(TIMER_US_DELAY, ENABLE);
-    /* Wait for 'delay' us */
-    while(counter_delay_ms != 0);
-    /* TIM2 disable counter */
-    TIM_Cmd(TIMER_US_DELAY, DISABLE);
-}
-
-
-
 /**
  *	@brief 	Time delay in millisecond. The default priority are changed for this function.
  * 					This function is called by reset function to guarantee the execution time
@@ -356,47 +147,8 @@ void delay_us(uint16_t delay)
  */
 void delayHighPriority_ms(uint16_t delay)
 {
-    NVIC_InitTypeDef NVIC_InitStructure;
 
-    counter_delay_ms = (delay+1);
-
-    /* Enable and set TIMER IRQ used for delays. High priority*/
-    NVIC_InitStructure.NVIC_IRQChannel 					 						= TIMER_DELAY_IRQ_CHANNEL;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= TIMER_DELAY_PREEMPTION_HIGHPRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 			 		= TIMER_DELAY_SUB_HIGHPRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 									=	 ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
-
-    TIM_ClearITPendingBit(TIMER_DELAY, TIM_IT_Update);
-    TIM_SetCounter(TIMER_DELAY, 0);
-    /* TIM2 enable counter */
-    TIM_Cmd(TIMER_DELAY, ENABLE);
-    /* Wait for 'delay' milliseconds */
-    while(counter_delay_ms != 0);
-    /* TIM2 disable counter */
-    TIM_Cmd(TIMER_DELAY, DISABLE);
-
-    /* Enable and set TIMER IRQ used for delays. Default priority */
-    NVIC_InitStructure.NVIC_IRQChannel 					 						= TIMER_DELAY_IRQ_CHANNEL;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority 		= TIMER_DELAY_PREEMPTION_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority 		 			= TIMER_DELAY_SUB_PRIORITY;
-    NVIC_InitStructure.NVIC_IRQChannelCmd 									=	 ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
-
-}
-
-/**
- *	@brief  This function decrements the counter every millisecond used by the function delay_ms
- *  @param  None
- *  @retval None
- */
-void decrement_delay(void)
-{
-    if(counter_delay_ms != 0)
-    {
-        /* Decrements the counter */
-        counter_delay_ms--;
-    }
+	delay_ms((u32)delay);
 }
 
 /**

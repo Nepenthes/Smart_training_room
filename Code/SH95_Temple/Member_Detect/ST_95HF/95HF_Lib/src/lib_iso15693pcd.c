@@ -26,8 +26,6 @@
   */ 
 #include "lib_iso15693pcd.h"
 
- /** @ brief timer function */
-extern void delay_ms(uint16_t delay);
 /** @ brief memory allocation for CR95Hf response */
 extern uint8_t 	u95HFBuffer [RFTRANS_95HF_MAX_BUFFER_SIZE+3]; 	// buffer for SPI ou UART reception
 

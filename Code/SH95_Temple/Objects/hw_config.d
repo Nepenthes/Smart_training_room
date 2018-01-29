@@ -27,3 +27,7 @@
 .\objects\hw_config.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\hw_config.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\objects\hw_config.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\hw_config.o: .\Usr\delay.h
+.\objects\hw_config.o: .\Usr\osObjects.h
+.\objects\hw_config.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
+.\objects\hw_config.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stddef.h

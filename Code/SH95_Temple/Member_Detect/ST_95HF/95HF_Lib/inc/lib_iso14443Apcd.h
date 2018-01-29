@@ -24,6 +24,8 @@
 #include "lib_PCD.h"
 #include "lib_iso14443A.h"
 
+#include "delay.h"
+
 /*  status and error code ---------------------------------------------------------------------- */
 #define ISO14443A_SUCCESSCODE									RESULTOK
 #define ISO14443A_ERRORCODE_DEFAULT						0x61

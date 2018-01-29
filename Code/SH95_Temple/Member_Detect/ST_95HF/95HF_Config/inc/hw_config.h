@@ -30,6 +30,7 @@
 #include "mass_mal.h"
 #endif /*USE_MSD_DRIVE*/
 
+#include "delay.h"
 
 /* Exported types ------------------------------------------------------------*/
 
@@ -85,17 +86,17 @@
 /* -------------------------------------------------------------------------- 
 * Delay TIMER configuration (ms)
 * -------------------------------------------------------------------------- */ 
-#define TIMER_DELAY														TIM2
+#define TIMER_DELAY												TIM2
 #define TIMER_DELAY_PERIOD										71
 #define TIMER_DELAY_PRESCALER									1000
-#define TIMER_DELAY_CLOCK											RCC_APB1Periph_TIM2
+#define TIMER_DELAY_CLOCK										RCC_APB1Periph_TIM2
 																						
 /* -------------------------------------------------------------------------- 
 * Delay TIMER configuration (µs)
 * --------------------------------------------------------------------------- */ 
-#define TIMER_US_DELAY												TIM2
+#define TIMER_US_DELAY											TIM2
 #define TIMER_US_DELAY_PERIOD									35
-#define TIMER_US_DELAY_PRESCALER							1
+#define TIMER_US_DELAY_PRESCALER								1
 #define TIMER_US_DELAY_CLOCK									RCC_APB1Periph_TIM2
 
 /** 
@@ -103,18 +104,12 @@
  */
 #define NVIC_PRIORITY_GROUP										NVIC_PriorityGroup_2
 
-#define TIMER_DELAY_PREEMPTION_PRIORITY				1
-#define TIMER_DELAY_SUB_PRIORITY							3
-#define TIMER_DELAY_IRQ_CHANNEL								TIM2_IRQn
+#define TIMER_DELAY_PREEMPTION_PRIORITY							1
+#define TIMER_DELAY_SUB_PRIORITY								3
+#define TIMER_DELAY_IRQ_CHANNEL									TIM2_IRQn
 
-#define TIMER_DELAY_PREEMPTION_HIGHPRIORITY		0
-#define TIMER_DELAY_SUB_HIGHPRIORITY					0
-
-
-/** 
- * @brief  IRQ functions names 
- */
-#define TIMER_DELAY_IRQ_HANDLER							TIM2_IRQHandler
+#define TIMER_DELAY_PREEMPTION_HIGHPRIORITY						0
+#define TIMER_DELAY_SUB_HIGHPRIORITY							0
 
 
 /* Exported functions ------------------------------------------------------- */
@@ -125,19 +120,15 @@ void Leave_LowPowerMode						( void );
 void USB_Cable_Config 						(FunctionalState NewState);
 void USB_Disconnect_Config					( void );
 #ifdef USE_MSD_DRIVE
-void Get_SerialNum								( void );
-void MAL_Config										( void );
+void Get_SerialNum							( void );
+void MAL_Config								( void );
 #endif
 
-void Timer_Config									( void );
-void Timer_RCC_Config							( void );
-void Timer_Structure_Config				( void );
-void delay_ms											( uint16_t delay );
-void delay_us											( uint16_t delay );
+void Timer_Config							( void );
+void Timer_RCC_Config						( void );
+void Timer_Structure_Config					( void );
 void delayHighPriority_ms					( uint16_t delay );
-void decrement_delay							( void );
-
-
+void decrement_delay						( void );
 
 #endif  /*__HW_CONFIG_H*/
 

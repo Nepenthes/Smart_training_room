@@ -27,3 +27,7 @@
 .\objects\stm32f10x_it.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\stm32f10x_it.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\string.h
 .\objects\stm32f10x_it.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\stm32f10x_it.o: .\Usr\delay.h
+.\objects\stm32f10x_it.o: .\Usr\osObjects.h
+.\objects\stm32f10x_it.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
+.\objects\stm32f10x_it.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stddef.h
