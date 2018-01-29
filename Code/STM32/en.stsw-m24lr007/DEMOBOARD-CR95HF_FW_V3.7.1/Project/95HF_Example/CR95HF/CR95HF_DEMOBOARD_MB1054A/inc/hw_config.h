@@ -103,14 +103,6 @@
  */
 #define NVIC_PRIORITY_GROUP										NVIC_PriorityGroup_2
 
-#define USB_HP_PREEMPTION_PRIORITY								2
-#define USB_HP_SUB_PRIORITY												1
-#define USB_HP_IRQ_CHANNEL												USB_HP_CAN1_TX_IRQn
-
-#define USB_LP_PREEMPTION_PRIORITY								2
-#define USB_LP_SUB_PRIORITY												2
-#define USB_LP_IRQ_CHANNEL												USB_LP_CAN1_RX0_IRQn
-
 #define TIMER_DELAY_PREEMPTION_PRIORITY				1
 #define TIMER_DELAY_SUB_PRIORITY							3
 #define TIMER_DELAY_IRQ_CHANNEL								TIM2_IRQn
@@ -122,24 +114,20 @@
 /** 
  * @brief  IRQ functions names 
  */
-#define USB_HP_IRQ_HANDLER										USB_HP_CAN1_TX_IRQHandler
-#define USB_LP_IRQ_HANDLER										USB_LP_CAN1_RX0_IRQHandler
 #define TIMER_STANDALONE_IRQ_HANDLER 					TIM4_IRQHandler
-#define TIMER_DELAY_IRQ_HANDLER								TIM2_IRQHandler
+#define TIMER_DELAY_IRQ_HANDLER							TIM2_IRQHandler
 
 
 /* Exported functions ------------------------------------------------------- */
-void Set_System										( void );
+void Set_System								( void );
 void Interrupts_Config						( void );
-void Set_USBClock									( void );
 void Enter_LowPowerMode						( void );
 void Leave_LowPowerMode						( void );
 void USB_Cable_Config 						(FunctionalState NewState);
-void USB_Disconnect_Config				( void );
+void USB_Disconnect_Config					( void );
 #ifdef USE_MSD_DRIVE
 void Get_SerialNum								( void );
 void MAL_Config										( void );
-void USB_RebootMSD								( void );
 #endif
 
 void Timer_Config									( void );
