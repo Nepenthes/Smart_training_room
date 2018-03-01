@@ -179,7 +179,7 @@ void dev95HF_Init(void){
 		osDelay(20);
   
 	LED_On(LED1);
-	delay_ms(400);
+	delay_ms(100);
 	LED_Off(LED1);
 	
 	Driver_USART3.Send("RFID_95HF Initialize completed.\r\n", 33);

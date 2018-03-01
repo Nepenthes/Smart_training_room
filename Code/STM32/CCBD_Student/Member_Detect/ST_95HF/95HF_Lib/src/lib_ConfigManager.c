@@ -235,11 +235,11 @@ void ConfigManager_HWInit (void)
 		/* nothing to do, this is a trap for debug purpose you can use it to detect HW issue */
 		/* or GPIO config issue */
 		
-		Driver_USART3.Send("abc\r\n", 5);
+		Driver_USART3.Send("RFID_95HF Initialize failed.\r\n", 30);
 		osDelay(20);
 	}else{
 	
-		Driver_USART3.Send("bcd\r\n", 5);
+		Driver_USART3.Send("RFID_95HF Initialize successed.\r\n", 33);
 		osDelay(20);
 	}
 	
@@ -247,7 +247,9 @@ void ConfigManager_HWInit (void)
 	ConfigManager_IDN(u95HFBuffer);
 	
 	IcVers = (IC_VERSION) (u95HFBuffer[ROM_CODE_REVISION_OFFSET]);
-
+	
+	Driver_USART3.Send("step 2-2 complete.\r\n", 20);
+	osDelay(20);
 }
 
 

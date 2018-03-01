@@ -483,6 +483,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>备忘录</GroupName>
+          <Files>
+            <File>
+              <FileName>备忘录.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Usr\备忘录.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
