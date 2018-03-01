@@ -8,24 +8,24 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
 
   <project>
-    <PathAndName>..\Code\STM32\CCBD\CCBD.uvprojx</PathAndName>
+    <PathAndName>..\Code\STM32\CCBD_Teacher\CCBD_Teacher.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>..\Code\STM32\CCBD_Student\CCBD_Student.uvprojx</PathAndName>
     <NodeIsActive>1</NodeIsActive>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
     <PathAndName>..\Code\STM32\SourceBD\SourceBD.uvprojx</PathAndName>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
     <PathAndName>..\Code\STC\faultSet\faultSet.uvproj</PathAndName>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
-    <PathAndName>..\Code\STM32\en.stsw-m24lr007\DEMOBOARD-CR95HF_FW_V3.7.1\Project\95HF_Example\CR95HF\CR95HF_DEMOBOARD_MB1054A\MDK-ARM\DEMO_BOARD_CR95HF.uvprojx</PathAndName>
-    <NodeIsExpanded>1</NodeIsExpanded>
+    <PathAndName>..\Code\STM32\SH95_Temple_CBT6\SH95_Temp.uvprojx</PathAndName>
   </project>
 
 </ProjectWorkspace>

@@ -1,10 +1,10 @@
-C51 COMPILER V9.54   DELAY                                                                 12/09/2017 17:16:33 PAGE 1   
+C51 COMPILER V9.54   DELAY                                                                 01/30/2018 09:53:20 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE DELAY
 OBJECT MODULE PLACED IN .\Objects\delay.obj
 COMPILER INVOKED BY: D:\Keil\Software\C51\BIN\C51.EXE StdPeriph_Driver\delay.c OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(..\f
-                    -aultSet;.\User;.\Hardware;.\StdPeriph_Driver) DEBUG PRINT(.\Listings\delay.lst) TABS(3) OBJECT(.\Objects\delay.obj)
+                    -aultSet;.\User;.\Hardware;.\StdPeriph_Driver) DEBUG PRINT(.\Listings\delay.lst) OBJECT(.\Objects\delay.obj)
 
 line level    source
 
@@ -21,13 +21,13 @@ line level    source
   11          /*---------------------------------------------------------------------*/
   12          
   13          
-  14          /************* 功能说明 **************
+  14          /*************  功能说明        **************
   15          
   16          本文件为STC15xxx系列的延时程序,用户几乎可以不修改这个程序.
   17          
   18          ******************************************/
   19          
-  20          #include "delay.h"
+  20          #include        "delay.h"
   21          
   22          
   23          
@@ -43,9 +43,9 @@ line level    source
   33          void  delay_ms(unsigned char ms)
   34          {
   35   1           unsigned int i;
-  36   1          do{
-  37   2               i = MAIN_Fosc / 13000;
-  38   2              while(--i)   ;   //14T per loop
+  36   1               do{
+  37   2                    i = MAIN_Fosc / 13000;
+  38   2                        while(--i)    ;   //14T per loop
   39   2           }while(--ms);
   40   1      }
 
@@ -62,7 +62,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
    FAR CONST SIZE   =   ----    ----
-C51 COMPILER V9.54   DELAY                                                                 12/09/2017 17:16:33 PAGE 2   
+C51 COMPILER V9.54   DELAY                                                                 01/30/2018 09:53:20 PAGE 2   
 
 END OF MODULE INFORMATION.
 
