@@ -5,13 +5,7 @@
 #include "sigDigital_Detect.h"
 #include "RelayCon.h"
 
-#define typeAnalogDet	0xA1
-#define typeDigitalDet	0xA2
-#define typeRelayCon	0xA3
-
-#define datsRole_Disp	0x01
-#define datsRole_DNLoad 0x02
-#define datsRole_UPLoad 0x03
+#include "UART_dataTransfer.h"
 
 typedef union{
 
@@ -22,16 +16,17 @@ typedef union{
 
 typedef enum{
 
-	datsAnalogDet	= typeAnalogDet,
-	datsDigitalDet	= typeDigitalDet,
-	datsRelayCon	= typeRelayCon,
+	datsAnalogDet = 0,
+	datsDigitalDet,
+	datsRelayCon,
 }SourceBD_DataType;
 
 typedef enum{
 
-	roleDisp	= datsRole_Disp,
-	roleDNLoad 	= datsRole_DNLoad,
-	roleUPLoad 	= datsRole_UPLoad,
+	roleUT485DNLoad = 1,
+	roleUT485UPLoad,
+	roleUTZigBDNLoad,
+	roleUTZigBUPLoad,
 }datsRole;
 
 typedef struct{
@@ -42,6 +37,14 @@ typedef struct{
 }SourceBD_MEAS;
 
 void osMsg_memPoolInit(void);
+
+extern osPoolId memid_SourceBD_pool;	
+
+extern osMessageQId MsgBoxID_SBD_Relay;
+extern osMessageQId MsgBoxID_SBD_AnaDet;
+extern osMessageQId MsgBoxID_SBD_DigDet;
+extern osMessageQId MsgBoxID_SBD_UTZigB;
+extern osMessageQId MsgBoxID_SBD_UT485;
 
 #endif
 

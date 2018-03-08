@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   USERMAIN                                                              01/30/2018 09:53:18 PAGE 1   
+C51 COMPILER V9.54   USERMAIN                                                              03/08/2018 16:33:07 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE USERMAIN
@@ -62,7 +62,7 @@ line level    source
   52   4                                                              Debug_log(Disp_log);
   53   4      #endif
   54   4                                                              Beep_time(80,40);               //更新提示
-C51 COMPILER V9.54   USERMAIN                                                              01/30/2018 09:53:18 PAGE 2   
+C51 COMPILER V9.54   USERMAIN                                                              03/08/2018 16:33:07 PAGE 2   
 
   55   4                                                              Beep_time(80,40);
   56   4                                                              

@@ -5,8 +5,11 @@
 #define osObjectsPublic                     // define objects in main module
 #include "osObjects.h"                      // RTOS object definitions
 
+#include "dataManager.h"
 #include "RelayCon.h"
 #include "UART_dataTransfer.h"
+#include "sigAnalog_Detect.h"
+#include "sigDigital_Detect.h"
 
 /*
  * main: initialize and start the system
@@ -20,10 +23,14 @@ int main (void) {
   // create 'thread' functions that start executing,
   // example: tid_name = osThreadCreate (osThread(name), NULL);
 	
-  RelayConThread_Active();
+	  osMsg_memPoolInit();
 	
-  communicationActive(comObj_Dev485);
-  communicationActive(comObj_Zigbee);
+	  RelayConThread_Active();
+		
+	  communicationActive(comObj_Dev485);
+	  communicationActive(comObj_Zigbee);
+	  sigAna_DetThread_Active();
+	  sigDig_DetThread_Active();
 
   osKernelStart ();                         // start thread execution 
 }

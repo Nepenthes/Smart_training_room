@@ -9,10 +9,16 @@
 #include "string.h"
 #include "Driver_USART.h"
 
+#define SBD_LocalAddr_main	0x0A
+#define SBO_LocalAddr_ext	0x01
+
 #define datsZigbeeTX	Driver_USART1.Send
 #define datsZigbeeRX	Driver_USART1.Receive
 #define datsDev485TX	Driver_USART3.Send
 #define datsDev485RX	Driver_USART3.Receive
+
+#define DTZIGB_FRAME_HEAD	0xFE
+#define DT485_FRAME_HEAD	0x85
 
 #define con485			PBout(5)
 

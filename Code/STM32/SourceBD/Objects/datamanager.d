@@ -30,3 +30,4 @@
 .\objects\datamanager.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\datamanager.o: .\Member_Detect\sigDigital_Detect.h
 .\objects\datamanager.o: .\Member_Operater\RelayCon.h
+.\objects\datamanager.o: .\Member_Transfer\UART_dataTransfer.h

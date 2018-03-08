@@ -13,8 +13,6 @@
 
   <project>
     <PathAndName>..\Code\STM32\CCBD_Student\CCBD_Student.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
-    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
@@ -23,6 +21,8 @@
 
   <project>
     <PathAndName>..\Code\STC\faultSet\faultSet.uvproj</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
+    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>

@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   SPI_FAULTSET                                                          01/30/2018 09:53:19 PAGE 1   
+C51 COMPILER V9.54   SPI_FAULTSET                                                          03/08/2018 16:33:08 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE SPI_FAULTSET
@@ -62,7 +62,7 @@ line level    source
   52   1              SPI_STP = 0;
   53   1              for(loop = (length - 1); loop >= 0; loop++)DatsIn595(Frame[loop]);      
   54   1              SPI_STP = 1;
-C51 COMPILER V9.54   SPI_FAULTSET                                                          01/30/2018 09:53:19 PAGE 2   
+C51 COMPILER V9.54   SPI_FAULTSET                                                          03/08/2018 16:33:08 PAGE 2   
 
   55   1              SPI_STP = 0;
   56   1      }

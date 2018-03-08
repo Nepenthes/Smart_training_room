@@ -1,5 +1,6 @@
-#include "sigAnalog_Detect.h"
+#include "dataManager.h"
 
+extern osMessageQId MsgBoxID_SBD_AnaDet;
 extern ARM_DRIVER_USART Driver_USART1;		//设备驱动库串口一设备声明
 
 osThreadId tid_sigAna_Det_Thread;

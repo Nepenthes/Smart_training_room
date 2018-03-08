@@ -1,4 +1,4 @@
-.\objects\usart_stm32f10x.o: User\reWrite\USART_STM32F10x.c
+.\objects\usart_stm32f10x.o: D:\Keil\Software\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\RTE_Driver\USART_STM32F10x.c
 .\objects\usart_stm32f10x.o: D:\Keil\Software\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\RTE_Driver\USART_STM32F10x.h
 .\objects\usart_stm32f10x.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\usart_stm32f10x.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h

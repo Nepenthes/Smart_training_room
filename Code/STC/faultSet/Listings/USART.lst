@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   USART                                                                 01/30/2018 09:53:21 PAGE 1   
+C51 COMPILER V9.54   USART                                                                 03/08/2018 16:33:10 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE USART
@@ -62,7 +62,7 @@ line level    source
   52   3                              {
   53   4                                      AUXR &= ~(1<<4);        //Timer stop
   54   4                                      AUXR |= 0x01;           //S1 BRT Use Timer2;
-C51 COMPILER V9.54   USART                                                                 01/30/2018 09:53:21 PAGE 2   
+C51 COMPILER V9.54   USART                                                                 03/08/2018 16:33:10 PAGE 2   
 
   55   4                                      AUXR &= ~(1<<3);        //Timer2 set As Timer
   56   4                                      AUXR |=  (1<<2);        //Timer2 set as 1T mode
@@ -126,7 +126,7 @@ line level    source
  114   2                      else    return 2;       //模式错误
  115   2                      if(COMx->UART_Interrupt == ENABLE)      IE2   |=  1;            //允许中断
  116   2                      else                                                            IE2   &= ~1;            //禁止中断
-C51 COMPILER V9.54   USART                                                                 01/30/2018 09:53:21 PAGE 3   
+C51 COMPILER V9.54   USART                                                                 03/08/2018 16:33:10 PAGE 3   
 
  117   2                      if(COMx->UART_RxEnable == ENABLE)       S2CON |=  (1<<4);       //允许接收
  118   2                      else                                                            S2CON &= ~(1<<4);       //禁止接收
@@ -190,7 +190,7 @@ line level    source
  176          
  177          /*
  178          void COMx_write2buff(COMx_Define *COMx, u8 dat) //写入发送缓冲，指针+1
-C51 COMPILER V9.54   USART                                                                 01/30/2018 09:53:21 PAGE 4   
+C51 COMPILER V9.54   USART                                                                 03/08/2018 16:33:10 PAGE 4   
 
  179          {
  180                  if(COMx->id == 1)       TX1_write2buff(dat);
@@ -254,7 +254,7 @@ line level    source
  238   3                      }
  239   2                      else    COM2.B_TX_busy = 0;
  240   2              }
-C51 COMPILER V9.54   USART                                                                 01/30/2018 09:53:21 PAGE 5   
+C51 COMPILER V9.54   USART                                                                 03/08/2018 16:33:10 PAGE 5   
 
  241   1      
  242   1      }

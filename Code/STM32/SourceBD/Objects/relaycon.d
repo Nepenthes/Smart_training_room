@@ -1,5 +1,6 @@
 .\objects\relaycon.o: Member_Operater\RelayCon.c
-.\objects\relaycon.o: Member_Operater\RelayCon.h
+.\objects\relaycon.o: .\User\dataManager.h
+.\objects\relaycon.o: .\Member_Detect\sigAnalog_Detect.h
 .\objects\relaycon.o: .\User\IO_Map.h
 .\objects\relaycon.o: .\User\delay.h
 .\objects\relaycon.o: D:\Keil\Software\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include\stm32f10x.h
@@ -27,3 +28,6 @@
 .\objects\relaycon.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Driver\Include\Driver_USART.h
 .\objects\relaycon.o: D:\Keil\Software\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Driver\Include\Driver_Common.h
 .\objects\relaycon.o: D:\Keil\Software\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\relaycon.o: .\Member_Detect\sigDigital_Detect.h
+.\objects\relaycon.o: .\Member_Operater\RelayCon.h
+.\objects\relaycon.o: .\Member_Transfer\UART_dataTransfer.h

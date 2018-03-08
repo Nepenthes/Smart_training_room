@@ -11,7 +11,7 @@
 
 typedef struct{
 
-	uint8_t conArryDats[2];
+	bool digVAL[2];
 }sigDig_Det_datsType;
 
 extern osThreadId 	 tid_sigDig_Det_Thread;
